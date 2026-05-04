@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Java URL Shortener</title>
+
+    <style>
+        body { font-family: helvetica; display: flex; flex-direction: column; align-items: center; padding-top: 50px;}
+        /*Input box*/
+        input { padding: 10px; width: 300px; margin-bottom: 10px;}
+        /*Button*/
+        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none;}
+    </style>
+</head>
+<body>
+    <h1>Mini URL Shortener</h1>
+    <input type = "text" id = "longURL" placeholder = "Past long URL here:">
+    <button onclick = "shorten()">Shorten!</button>
+    <p id = "result"></p>
+
+    <script>
+        async function shorten(){
+
+            //Grab user input from the input box (ID)
+            const urlInput = document.getElementById('longURL').value;
+
+            //Fetch -- browser tab that calls to Java @GetMapping("/shorten")
+            const response = await fetch('shorten?url=' + encodeURIComponent(urlInput));
+
+            //Wait for server to send back shorten link
+            const text = await response.text();
+
+            //Put text into 'result' so user sees it
+            document.getElementById('result').innerText = text;
+        }
+    </script>
+</body>
+</html>
