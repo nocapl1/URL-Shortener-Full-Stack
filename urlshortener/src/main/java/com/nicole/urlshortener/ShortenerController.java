@@ -1,13 +1,16 @@
 package com.nicole.urlshortener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Random;
 
 @RestController //This class handles the web requests
 public class ShortenerController {
-
-    private HashMap<String, String> database = new HashMap<>();
+    
+    //Automatically connect to database
+    @Autowired
+    private UrlRepository repository;
 
     //Note: to avoid users who don't have a registered SSL certificate, use http
     private String domain = "http://localhost:8080/"; 
@@ -25,7 +28,7 @@ public class ShortenerController {
 
         //Calls on method to make short combination
         String shortCode = generateCode(); 
-        database.put(shortCode, url);
+        repository.save(new UrlEntry(shortCode, url));
 
         return domain + "go/" + shortCode; 
     }
@@ -35,10 +38,10 @@ public class ShortenerController {
     @GetMapping("/go/{code}")
     public void redirect(@PathVariable String code, jakarta.servlet.http.HttpServletResponse response) throws Exception{
     
-        String originalURL = database.get(code);
+        java.util.Optional<UrlEntry> entry = repository.findById(code);
 
-        if(originalURL != null){
-            response.sendRedirect(originalURL);
+        if(entry.isPresent()){
+            response.sendRedirect(entry.get().getOriginalUrl());
         }else{
             response.sendError(404, "Link was not found.");
         }
