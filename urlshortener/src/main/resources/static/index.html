@@ -14,9 +14,22 @@
 </head>
 <body>
     <h1>Mini URL Shortener</h1>
-    <input type = "text" id = "longURL" placeholder = "Past long URL here:">
-    <button onclick = "shorten()">Shorten!</button>
-    <p id = "result"></p>
+    <div id="inputSection">
+        <p>Past your long link below:</p>
+        <input type="text" id="longURL" placeholder = "https://example.com/very-long-URL-link">
+        <br>
+        <button onclick = "shorten()">Shorten URL!</button>
+    </div>
+
+    <div id="resultSection" style = "display: none;">
+        <p>
+            <span>Your short URL is: </span>
+            <a id="shortLink" href="#" target="_blank"></a>
+        </p>
+        <br>
+        <button onclick = "resetUI()" style = "background: #6c757d;">Shorten Another URL!</button>
+
+    </div>
 
     <script>
         async function shorten(){
@@ -24,14 +37,34 @@
             //Grab user input from the input box (ID)
             const urlInput = document.getElementById('longURL').value;
 
+            //Check if valid
+            if (!urlInput){
+                alert("Please enter a valid URL!");
+                return;
+            }
+
             //Fetch -- browser tab that calls to Java @GetMapping("/shorten")
-            const response = await fetch('shorten?url=' + encodeURIComponent(urlInput));
+            const response = await fetch('/shorten?url=' + encodeURIComponent(urlInput));
 
             //Wait for server to send back shorten link
             const text = await response.text();
 
+            //Hyperlink
+            const linkElement = document.getElementById('shortLink');
+            linkElement.innerText = text;
+            linkElement.href = text;
+
             //Put text into 'result' so user sees it
-            document.getElementById('result').innerText = text;
+            document.getElementById('inputSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function resetUI(){
+
+            //Clear board & toggles to view back
+            document.getElementById('longURL').value = '';
+            document.getElementById('inputSection').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
         }
     </script>
 </body>

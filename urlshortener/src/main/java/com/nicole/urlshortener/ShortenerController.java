@@ -27,7 +27,7 @@ public class ShortenerController {
         String shortCode = generateCode(); 
         database.put(shortCode, url);
 
-        return "Your short URL is: " + domain + "go/" + shortCode; 
+        return domain + "go/" + shortCode; 
     }
 
     //Redirect -- Being able to use shorten to jump back to original URL
