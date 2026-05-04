@@ -2,7 +2,6 @@ package com.nicole.urlshortener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
 import java.util.Random;
 
 @RestController //This class handles the web requests
