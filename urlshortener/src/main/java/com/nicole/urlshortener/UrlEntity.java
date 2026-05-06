@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 
 @Entity // Creates database for this class
-public class UrlEntry {
+public class UrlEntity {
 
     @Id //Unique primary key
     private String shortCode;
@@ -14,12 +14,12 @@ public class UrlEntry {
     private String originalUrl;
 
     //Spring JPA - Empty constructor requirement
-    public UrlEntry(){
+    public UrlEntity(){
 
     }
 
     //Constructor to create new entities
-    public UrlEntry(String shortCode, String originalUrl){
+    public UrlEntity(String shortCode, String originalUrl){
         this.shortCode = shortCode;
         this.originalUrl = originalUrl;
     }
