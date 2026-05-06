@@ -27,7 +27,7 @@ public class ShortenerController {
 
         //Calls on method to make short combination
         String shortCode = generateCode(); 
-        repository.save(new UrlEntry(shortCode, url));
+        repository.save(new UrlEntity(shortCode, url));
 
         return domain + "go/" + shortCode; 
     }
@@ -37,7 +37,7 @@ public class ShortenerController {
     @GetMapping("/go/{code}")
     public void redirect(@PathVariable String code, jakarta.servlet.http.HttpServletResponse response) throws Exception{
     
-        java.util.Optional<UrlEntry> entry = repository.findById(code);
+        java.util.Optional<UrlEntity> entry = repository.findById(code);
 
         if(entry.isPresent()){
             response.sendRedirect(entry.get().getOriginalUrl());
