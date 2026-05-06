@@ -5,17 +5,118 @@
     <title>Java URL Shortener</title>
 
     <style>
-        body { font-family: helvetica; display: flex; flex-direction: column; align-items: center; padding-top: 50px;}
-        /*Input box*/
-        input { padding: 10px; width: 300px; margin-bottom: 10px;}
+        :root {
+            --bg-color: #F4F1DE;      
+            --card-bg: #FFFFFF;       
+            --text-main: #3D405B;    
+            --accent-main: #81B29A;   
+            --accent-hover: #5F8F78;  
+            --accent-warm: #E07A5F;   
+            --accent-warm-hover: #C25B42; 
+            --shadow: rgba(61, 64, 91, 0.08);
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, Helvetica; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding-top: 80px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        h1 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+        }
+
+        /*card look*/
+        #inputSection, #resultSection {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px; /*rounder corners */
+            box-shadow: 0 10px 25px var(--shadow); /*"floating" effect */
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        /*Input Box*/
+        input { 
+            padding: 14px; 
+            width: 85%; 
+            margin-bottom: 20px; 
+            border: 2px solid #E0E0E0; 
+            border-radius: 10px; 
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.4s ease; /*fade when clicking the box */
+            color: var(--text-main);
+            background-color: #FAFAFA;
+        }
+
+        /*typing*/
+        input:focus {
+            border-color: var(--accent-main); 
+        }
+
         /*Button*/
-        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none;}
+        button { 
+            padding: 14px 24px; 
+            cursor: pointer; 
+            background: var(--accent-main); 
+            color: #FFFFFF; 
+            border: none; 
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s, transform 0.1s; /*Color change & click effect */
+            width: 90%;
+        }
+
+        button:hover{
+            background: var(--accent-hover);
+        }
+
+        button:active{
+            transform: scale(0.8); /* pressing inwards*/
+        }
+
+        /*result link*/
+        #shortLink {
+            font-size: 1.25rem;
+            color: var(--accent-main);
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(129, 178, 154, 0.1); /*Light highlight*/
+            border-radius: 8px;
+        }
+
+        #shortLink:hover { text-decoration: underline; }
+
+        /*reset button*/
+        .btn-secondary{
+            background: var(--accent-warm);
+            margin-top: 20px;
+        }
+
+        .btn-secondary:hover{
+            background: var(--accent-warm-hover);
+        }
+        
     </style>
 </head>
 <body>
     <h1>Mini URL Shortener</h1>
     <div id="inputSection">
-        <p>Past your long link below:</p>
+        <p>Paste your long link below:</p>
         <input type="text" id="longURL" placeholder = "https://example.com/very-long-URL-link">
         <br>
         <button onclick = "shorten()">Shorten URL!</button>
@@ -27,7 +128,7 @@
             <a id="shortLink" href="#" target="_blank"></a>
         </p>
         <br>
-        <button onclick = "resetUI()" style = "background: #6c757d;">Shorten Another URL!</button>
+        <button onclick = "resetUI()" class="btn-secondary">Shorten Another URL!</button>
 
     </div>
 
